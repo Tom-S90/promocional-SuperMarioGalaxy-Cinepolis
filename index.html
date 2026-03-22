@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinepolis - Rifa exclusiva - Super Mario Galaxy</title>
     <style>
@@ -21,160 +20,182 @@
             line-height: 1.6;
         }
 
+        /* HEADER & LOGO */
         header {
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-            padding: 20px 5%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            padding: 15px 5%;
             position: fixed;
-            width: 90%;
+            width: 100%;
             z-index: 1000;
+            box-sizing: border-box;
         }
 
+        .logo {
+            /* Brighter logo using brightness/contrast filters */
+            filter: brightness(1.2) contrast(1.1);
+            height: auto;
+            width: 180px; /* Base size for desktop */
+            min-width: 120px; /* Prevents it from disappearing on tiny screens */
+            display: block;
+        }
+
+        /* HERO SECTION */
         .hero {
-            height: 60vh;
+            height: 50vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            /* Using a semi-transparent overlay on the background image */
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('./image_2026-03-20_172606177.webp');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('./image_2026-03-20_172606177.webp');
             background-size: cover;
             background-position: center;
         }
 
         .hero-content {
-            background: rgba(0, 0, 0, 0.4); /* Slightly transparent background for text box */
-            padding: 20px;
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            color: white; /* Force white text */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        }
-
-        .hero-content p {
+            font-size: 3rem;
+            margin: 0;
             color: white;
-            font-size: 1.2rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
-        #countdown {
-            font-weight: bold;
-            color: var(--accent-gold);
-            font-size: 1.5rem;
-            margin-top: 10px;
-        }
-
-        /* Layout Grid */
-        .main-layout {
-            display: grid; 
-            grid-template-columns: 3fr 1fr; 
-            gap: 20px;
+        /* MAIN CONTENT LAYOUT */
+        .main-wrapper {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: -60px auto 50px;
             padding: 0 20px;
+            display: flex;
+            flex-direction: row; /* Desktop side-by-side */
+            gap: 30px;
+            align-items: stretch;
         }
 
         .container {
+            flex: 2; /* Form takes more space */
             background: #1a1a1a;
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-top: -50px; /* Overlap effect */
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             position: relative;
-            z-index: 10;
         }
 
         .poster-container {
-            margin-top: 20px;
+            flex: 1; /* Poster container */
+            display: flex;
         }
 
         .poster-img {
             width: 100%;
-            max-width: 300px;
-            border-radius: 20px; /* Rounded corners */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
+            height: 100%;
+            object-fit: cover; /* Makes it fill the height of the form */
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
 
-        .logo {
-            max-width: 150px;
+        /* REALISTIC TIMER */
+        .timer-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #222;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        #countdown {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 850px) {
+            .main-wrapper {
+                flex-direction: column; /* Stack vertically */
+                margin-top: 20px;
+            }
+
+            .poster-container {
+                order: -1; /* Move poster to TOP on mobile */
+                justify-content: center;
+            }
+
+            .poster-img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .logo {
+                width: 140px; /* Balanced size for mobile */
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
         }
 
         footer {
             text-align: center;
-            padding: 40px 20px;
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* Responsive Fixes */
-        @media (max-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr; /* Stack vertically */
-                display: flex;
-                flex-direction: column;
-            }
-
-            .poster-container {
-                order: 2; /* Move poster to bottom */
-                text-align: center;
-                margin-bottom: 50px;
-            }
-
-            .container {
-                order: 1;
-            }
-
-            .logo {
-                max-width: 120px; /* Normal size logo for mobile */
-            }
-
-            .hero-content h1 {
-                font-size: 2rem;
-            }
+            padding: 30px;
+            color: #555;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#">
-            <img class="logo" src="./Cinépolis.svg.webp" alt="Cinepolis Logo">
-        </a>    
+        <img class="logo" src="./Cinépolis.svg.webp" alt="Cinepolis">
     </header>
 
     <section class="hero">
         <div class="hero-content">
             <h1>La Galaxia te espera</h1>
-            <p>Participa para ganar entradas gratis a una vista en sala Premium en plaza Harbor Mérida</p>
-            <div id="countdown">Cargando sorteo...</div>
+            <p>Sorteo exclusivo para residentes de Mérida</p>
         </div>
     </section>
 
-    <div class="main-layout">
+    <main class="main-wrapper">
+        <div class="poster-container">
+            <img class="poster-img" src="./image_2026-03-20_172609665.webp" alt="Super Mario Galaxy Poster">
+        </div>
+
         <div class="container">
-            <h2>Que la suerte te acompañe</h2>
-            <p>Por favor proporciona los datos solicitados a continuación para participar en el evento</p>
+            <div class="timer-box">
+                <span class="timer-label">Tiempo restante:</span>
+                <div id="countdown">00:00</div>
+            </div>
+
+            <h2>Regístrate para participar</h2>
+            <p>Completa el formulario para entrar en la rifa de 2 boletos VIP en Plaza Harbor.</p>
             
-            <iframe data-tally-src="https://tally.so/embed/5B20qv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="282" frameborder="0" marginheight="0" marginwidth="0" title="Registration Form"></iframe>
+            <iframe data-tally-src="https://tally.so/embed/5B20qv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="300" frameborder="0" title="Registro"></iframe>
             <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
         </div>
-
-        <div class="poster-container">
-            <a href="#">
-                <img class="poster-img" src="./image_2026-03-20_172609665.webp" alt="Movie Poster">
-            </a>
-        </div>
-    </div>
+    </main>
 
     <footer>
-        &copy; 2026 Rifa de boletos particular Cinepolis. All rights reserved.
+        &copy; 2026 Cinépolis de México, S.A. de C.V. Esta es una promoción independiente.
     </footer>
 
     <script>
-        // Simple Countdown Timer (10 minutes for urgency)
         function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
             setInterval(function () {
@@ -184,19 +205,18 @@
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                display.textContent = "El sorteo cierra en: " + minutes + ":" + seconds;
+                display.textContent = minutes + ":" + seconds;
 
                 if (--timer < 0) {
-                    timer = 0;
-                    display.textContent = "¡Sorteo Cerrado!";
+                    display.textContent = "00:00";
                 }
             }, 1000);
         }
 
         window.onload = function () {
-            var tenMinutes = 60 * 10,
+            var fiveMinutes = 60 * 5,
                 display = document.querySelector('#countdown');
-            startTimer(tenMinutes, display);
+            startTimer(fiveMinutes, display);
         };
     </script>
 </body>
