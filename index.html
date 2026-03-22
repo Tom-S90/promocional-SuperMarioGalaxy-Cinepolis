@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinepolis - Rifa exclusiva - Super Mario Galaxy</title>
+    <title>Cinépolis - Rifa exclusiva - Super Mario Galaxy</title>
     <style>
         :root {
             --primary-blue: #002d72;
             --accent-gold: #ffc400;
             --dark-bg: #0a0a0a;
             --text-light: #f4f4f4;
+            --danger-red: #d32f2f;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding-bottom: 70px; /* Space for the sticky timer bar */
             background-color: var(--dark-bg);
             color: var(--text-light);
             line-height: 1.6;
@@ -31,174 +34,162 @@
         }
 
         .logo {
-            /* Brighter logo using brightness/contrast filters */
-            filter: brightness(1.2) contrast(1.1);
+            filter: brightness(1.3) contrast(1.1);
             height: auto;
-            width: 180px; /* Base size for desktop */
-            min-width: 120px; /* Prevents it from disappearing on tiny screens */
+            width: clamp(140px, 15vw, 200px); /* Responsive sizing: min, pref, max */
             display: block;
+            transition: transform 0.2s;
         }
+        
+        .logo:hover { transform: scale(1.02); }
 
         /* HERO SECTION */
         .hero {
-            height: 50vh;
+            height: 45vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('./image_2026-03-20_172606177.webp');
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('./image_2026-03-20_172606177.webp');
             background-size: cover;
             background-position: center;
         }
 
-        .hero-content {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 30px;
-            border-radius: 12px;
-            backdrop-filter: blur(5px);
-        }
-
         .hero-content h1 {
-            font-size: 3rem;
-            margin: 0;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
             color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
+            margin: 0;
         }
 
         /* MAIN CONTENT LAYOUT */
         .main-wrapper {
-            max-width: 1200px;
-            margin: -60px auto 50px;
+            max-width: 1100px;
+            margin: -50px auto 50px;
             padding: 0 20px;
             display: flex;
-            flex-direction: row; /* Desktop side-by-side */
-            gap: 30px;
-            align-items: stretch;
+            flex-direction: row;
+            gap: 20px;
         }
 
         .container {
-            flex: 2; /* Form takes more space */
+            flex: 1.8;
             background: #1a1a1a;
-            padding: 40px;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
         }
 
         .poster-container {
-            flex: 1; /* Poster container */
+            flex: 1;
             display: flex;
         }
 
         .poster-img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Makes it fill the height of the form */
+            object-fit: cover;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: opacity 0.3s;
         }
+        
+        .poster-img:hover { opacity: 0.9; }
 
-        /* REALISTIC TIMER */
-        .timer-box {
+        /* STICKY URGENCY BAR */
+        .sticky-timer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--danger-red);
+            color: white;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            background: #222;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            margin-bottom: 20px;
-            width: fit-content;
-        }
-
-        .timer-label {
-            font-size: 0.8rem;
+            padding: 12px 0;
+            z-index: 2000;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            font-weight: bold;
             text-transform: uppercase;
-            color: #888;
             letter-spacing: 1px;
+            gap: 15px;
         }
 
         #countdown {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.5rem;
-            color: var(--accent-gold);
-            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            background: rgba(0,0,0,0.3);
+            padding: 2px 10px;
+            border-radius: 4px;
         }
 
         /* MOBILE RESPONSIVENESS */
         @media (max-width: 850px) {
             .main-wrapper {
-                flex-direction: column; /* Stack vertically */
+                flex-direction: column;
                 margin-top: 20px;
             }
 
             .poster-container {
-                order: -1; /* Move poster to TOP on mobile */
-                justify-content: center;
+                order: -1; /* Poster on top for mobile */
             }
 
             .poster-img {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .logo {
-                width: 140px; /* Balanced size for mobile */
-            }
-
-            .hero-content h1 {
-                font-size: 1.8rem;
+                height: 250px; /* Shorter poster for mobile mobile to save space */
             }
         }
 
         footer {
             text-align: center;
-            padding: 30px;
-            color: #555;
-            font-size: 0.85rem;
+            padding: 40px 20px;
+            color: #444;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img class="logo" src="./Cinépolis.svg.webp" alt="Cinepolis">
+        <a href="https://cinepolis.com/mx/detalle?cinema=cinepolis-vip-the-harbor-merida&selected=cinepolis-vip-the-harbor-merida&movie=super-mario-galaxy-la-pelicula">
+            <img class="logo" src="./Cinépolis.svg.webp" alt="Cinépolis">
+        </a>
     </header>
 
     <section class="hero">
         <div class="hero-content">
             <h1>La Galaxia te espera</h1>
-            <p>Sorteo exclusivo para residentes de Mérida</p>
         </div>
     </section>
 
     <main class="main-wrapper">
         <div class="poster-container">
-            <img class="poster-img" src="./image_2026-03-20_172609665.webp" alt="Super Mario Galaxy Poster">
+            <a href="https://cinepolis.com/mx/detalle?cinema=cinepolis-vip-the-harbor-merida&selected=cinepolis-vip-the-harbor-merida&movie=super-mario-galaxy-la-pelicula" style="width:100%">
+                <img class="poster-img" src="./image_2026-03-20_172609665.webp" alt="Poster Promocional">
+            </a>
         </div>
 
         <div class="container">
-            <div class="timer-box">
-                <span class="timer-label">Tiempo restante:</span>
-                <div id="countdown">00:00</div>
-            </div>
-
-            <h2>Regístrate para participar</h2>
-            <p>Completa el formulario para entrar en la rifa de 2 boletos VIP en Plaza Harbor.</p>
+            <h2>¡Últimas entradas disponibles!</h2>
+            <p>Participa ahora para ganar 2 boletos en <b>Cinépolis VIP The Harbor Mérida</b>. El sorteo es automático al finalizar el registro.</p>
             
-            <iframe data-tally-src="https://tally.so/embed/5B20qv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="300" frameborder="0" title="Registro"></iframe>
+            <iframe data-tally-src="https://tally.so/embed/5B20qv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="320" frameborder="0" title="Formulario de Registro"></iframe>
             <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
         </div>
     </main>
 
+    <div class="sticky-timer">
+        <span>La oferta expira en:</span>
+        <div id="countdown">04:59</div>
+    </div>
+
     <footer>
-        &copy; 2026 Cinépolis de México, S.A. de C.V. Esta es una promoción independiente.
+        &copy; 2026 Cinépolis de México, S.A. de C.V. | <a href="#" style="color:#444">Aviso de Privacidad</a>
     </footer>
 
     <script>
         function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
-            setInterval(function () {
+            var interval = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
 
@@ -208,7 +199,9 @@
                 display.textContent = minutes + ":" + seconds;
 
                 if (--timer < 0) {
+                    clearInterval(interval);
                     display.textContent = "00:00";
+                    document.querySelector('.sticky-timer').style.background = "#555";
                 }
             }, 1000);
         }
